@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Developer - Rhythm Timalsina</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .about-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .about-container.dark {
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+    }
+
+    .about-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .about-info p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    .about-info a {
+      color: #1e90ff;
+      text-decoration: none;
+    }
+
+    .about-bio {
+      margin-top: 30px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<canvas id="rain-canvas"></canvas>
+<body>
+<nav class="navbar">
+  <div class="logo-container">
+    <a href="index.html"><img src="logo.png" alt="Logo" class="logo"></a>
+    <a href="index.html" style="text-decoration: none; color: inherit;"><span class="title">My Nepali GPA Calculator</span></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="top-colleges.html">Top Colleges</a></li>
+    <li><a href="about-developer.html">About Developer</a></li>
+  </ul>
+  <div class="toggle-container">
+    <label class="switch" aria-label="Toggle Theme">
+      <input type="checkbox" id="themeToggle">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</nav>
+
+  <div class="about-container" id="about">
+    <h1 class="about-title">👨‍💻 About the Developer</h1>
+    <div class="about-info">
+      <p><strong>Name:</strong> Rhythm Timalsina</p>
+      <p><strong>Address:</strong> Kapan, Kathmandu</p>
+      <p><strong>Age:</strong> 17</p>
+      <p><strong>Email:</strong> <a href="mailto:info.yantrarhythm@gmail.com">info.yantrarhythm@gmail.com</a></p>
+      <p><strong>Phone:</strong> <a href="tel:+9779829700542">+977 9829700542</a></p>
+      <p>
+        <strong>Connect:</strong><br>
+        <a href="https://www.linkedin.com/in/rhythm-timalsina-849729321/" target="_blank">🔗 LinkedIn</a> |
+        <a href="https://www.instagram.com/rhythmm091/" target="_blank">📷 Instagram</a> |
+        <a href="https://wa.me/9779829700542" target="_blank">💬 WhatsApp</a> |
+        <a href="https://rhythms.bio/   " target="_blank">🔗Bio</a>
+      </p>
+
+      <div class="about-bio">
+        <h3>🧠 My Story</h3>
+        <p>
+          Hey! I'm Rhythm Timalsina a 17-year-old tech enthusiast, entrepreneur, and someone who's constantly experimenting with ideas that can change the future. From building robots to coding smart solutions and organizing nationwide tech events, I’ve always believed that innovation doesn’t wait for age, it starts with passion.
+        </p>
+        <p>
+          I’m the Founder/CEO of Dream Build IT Solutions and Former President of the GoldenGate Science and Robotics Club. My mission is clear to push Nepal toward a smarter, digital era. Whether it’s leading workshops, building AI-integrated systems, or creating apps that solve real problems, I’m all in.
+        </p>
+        <p>
+          This website, projects, and events I run? They're just the beginning.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("themeToggle");
+    toggle.addEventListener("change", function () {
+      document.body.classList.toggle("dark");
+      document.getElementById("about").classList.toggle("dark");
+    });
+  </script>
+  <script>
+const canvas = document.getElementById('rain-canvas');
+const ctx = canvas.getContext('2d');
+let raindrops = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function createRaindrops(count) {
+  raindrops = [];
+  for (let i = 0; i < count; i++) {
+    raindrops.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      length: Math.random() * 15 + 15,
+      opacity: Math.random() * 0.5 + 0.3,
+      speed: Math.random() * 5 + 4
+    });
+  }
+}
+
+function drawRain() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = 'rgba(173,216,230,0.6)';
+  ctx.lineWidth = 1.2;
+
+  for (let drop of raindrops) {
+    ctx.beginPath();
+    ctx.moveTo(drop.x, drop.y);
+    ctx.lineTo(drop.x, drop.y + drop.length);
+    ctx.stroke();
+    drop.y += drop.speed;
+
+    if (drop.y > canvas.height) {
+      drop.y = -drop.length;
+      drop.x = Math.random() * canvas.width;
+    }
+  }
+
+  requestAnimationFrame(drawRain);
+}
+
+// Optional: fade out rain after some time
+function startRain(duration = 3000) {
+  canvas.style.display = 'block';
+  createRaindrops(150);
+  drawRain();
+  setTimeout(() => {
+    canvas.style.display = 'none';
+  }, duration);
+}
+
+// Start effect on load or between pages
+window.addEventListener('DOMContentLoaded', () => {
+  startRain();
+});
+</script>
+  <footer style="
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--light-bg);
+  color: var(--light-text);
+  text-align: center;
+  padding: 10px 0;
+  transition: background 0.4s ease, color 0.4s ease;
+">
+  <p>&copy; 2025 My Nepali GPA Calculator. All rights reserved.</p>
+  <p>Developed by Rhythm Timalsina</p>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Nepali GPA Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="rain-canvas"></canvas>
+
+<nav class="navbar">
+  <div class="logo-container">
+    <a href="index.html"><img src="logo.png" alt="Logo" class="logo"></a>
+    <a href="index.html" style="text-decoration: none; color: inherit;"><span class="title">My Nepali GPA Calculator</span></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="top-colleges.html">Top Colleges</a></li>
+    <li><a href="about-developer.html">About Developer</a></li>
+  </ul>
+  <div class="toggle-container">
+    <label class="switch" aria-label="Toggle Theme">
+      <input type="checkbox" id="themeToggle">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</nav>
+
+  <main class="container">
+    <h1>🎓 GPA Calculator</h1>
+    <div class="input-group">
+      <input list="subjects" id="subjectName" placeholder="Select a Subject" />
+      <datalist id="subjects">
+        <option value="Compulsory English">
+        <option value="Compulsory Nepali">
+        <option value="Mathematics">
+        <option value="Physics">
+        <option value="Chemistry">
+        <option value="Biology">
+        <option value="Computer Science">
+        <option value="Economics">
+        <option value="Accountancy">
+        <option value="Business Studies">
+        <option value="Hotel Management">
+        <option value="Marketing">
+        <option value="Travel & Tourism">
+        <option value="Sociology">
+        <option value="Mass Communication">
+        <option value="Psychology">
+        <option value="Rural Development">
+        <option value="Population Studies">
+        <option value="Civics & Moral Education">
+        <option value="Constitutional Law">
+        <option value="Political Science">
+        <option value="Human Rights">
+      </datalist>
+
+      <select id="subjectGrade">
+        <option disabled selected>Choose Grade</option>
+        <option value="A+" data-gpa="4.0">A+</option>
+        <option value="A" data-gpa="3.6">A</option>
+        <option value="B+" data-gpa="3.2">B+</option>
+        <option value="B" data-gpa="2.8">B</option>
+        <option value="C+" data-gpa="2.4">C+</option>
+        <option value="C" data-gpa="2.0">C</option>
+        <option value="D" data-gpa="1.6">D</option>
+        <option value="NG" data-gpa="0">NG</option>
+      </select>
+
+      <input type="number" id="subjectGPA" placeholder="GPA Auto-filled" readonly />
+    </div>
+
+    <button onclick="addSubject()">➕ Add Subject</button>
+    <div class="subjects-list" id="subjectList"></div>
+    <button onclick="calculateGPA()">✅ Calculate GPA</button>
+    <button onclick="downloadPDF()">⬇️ Download as PDF</button>
+    <button onclick="shareResult()">📋 Copy Result</button>
+
+    <div id="output" class="result" style="display: none;"></div>
+    <div id="charts" class="charts" style="display: none;"></div>
+    <div id="tips" class="tips" style="display: none;"></div>
+
+    <div class="gpa-info">
+      <div class="achievement-table">
+        <h2>Achievement Percentage & GPA</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>S.N</th>
+              <th>Achievement Percentage</th>
+              <th>GPA</th>
+              <th>Letter Grade</th>
+              <th>Description of Achievements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>≥ 90%</td><td>4.0</td><td>A+</td><td>Outstanding</td></tr>
+            <tr><td>2</td><td>≥ 80% but <90%</td><td>3.6</td><td>A</td><td>Excellent</td></tr>
+            <tr><td>3</td><td>≥ 70% but <80%</td><td>3.2</td><td>B+</td><td>Very Good</td></tr>
+            <tr><td>4</td><td>≥ 60% but <70%</td><td>2.8</td><td>B</td><td>Good</td></tr>
+            <tr><td>5</td><td>≥ 50% but <60%</td><td>2.4</td><td>C+</td><td>Satisfactory</td></tr>
+            <tr><td>6</td><td>≥ 40% but <50%</td><td>2.0</td><td>C</td><td>Acceptable</td></tr>
+            <tr><td>7</td><td>≥ 35% but <40%</td><td>1.6</td><td>D</td><td>Basic</td></tr>
+            <tr><td>8</td><td>< 35%</td><td>*</td><td>NG</td><td>Not Graded</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br><br>
+
+      <div class="grade-breakdown">
+        <h2>Theory Grade Breakdown</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Letter Grade</th>
+              <th>Score Range</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>A+</td><td>67.5 – 75 marks</td><td>Excellent</td></tr>
+            <tr><td>A</td><td>60 – <67.5 marks</td><td>Very Good</td></tr>
+            <tr><td>B+</td><td>52.5 – <60 marks</td><td>Good</td></tr>
+            <tr><td>B</td><td>45 – <52.5 marks</td><td>Above Average</td></tr>
+            <tr><td>C+</td><td>37.5 – <45 marks</td><td>Average</td></tr>
+            <tr><td>C</td><td>30 – <37.5 marks</td><td>Below Average</td></tr>
+            <tr><td>D</td><td>26.25 – <30 marks</td><td>Pass</td></tr>
+            <tr><td>AD</td><td>Absent</td><td>No marks given</td></tr>
+            <tr><td>NG</td><td>Not Graded</td><td>No Grade</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br><br>
+
+      <div class="grade-breakdown">
+        <h2>Practical Grade Breakdown</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Letter Grade</th>
+              <th>Score Range</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>A+</td><td>23–25 marks</td><td>Excellent</td></tr>
+            <tr><td>A</td><td>20–22 marks</td><td>Very Good</td></tr>
+            <tr><td>B+</td><td>17–19 marks</td><td>Good</td></tr>
+            <tr><td>B</td><td>14–16 marks</td><td>Above Average</td></tr>
+            <tr><td>C+</td><td>11–13 marks</td><td>Average</td></tr>
+            <tr><td>C</td><td>8–10 marks</td><td>Below Average</td></tr>
+            <tr><td>D</td><td>5–7 marks</td><td>Pass</td></tr>
+            <tr><td>AD</td><td>Absent</td><td>No marks given</td></tr>
+            <tr><td>NG</td><td>Not Graded</td><td>No Grade</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.17/jspdf.plugin.autotable.min.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Rain Animation -->
+  <script>
+    const canvas = document.getElementById('rain-canvas');
+    const ctx = canvas.getContext('2d');
+    let raindrops = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createRaindrops(count) {
+      raindrops = [];
+      for (let i = 0; i < count; i++) {
+        raindrops.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          length: Math.random() * 15 + 15,
+          opacity: Math.random() * 0.5 + 0.3,
+          speed: Math.random() * 5 + 4
+        });
+      }
+    }
+
+    function drawRain() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(173,216,230,0.6)';
+      ctx.lineWidth = 1.2;
+
+      for (let drop of raindrops) {
+        ctx.beginPath();
+        ctx.moveTo(drop.x, drop.y);
+        ctx.lineTo(drop.x, drop.y + drop.length);
+        ctx.stroke();
+        drop.y += drop.speed;
+
+        if (drop.y > canvas.height) {
+          drop.y = -drop.length;
+          drop.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(drawRain);
+    }
+
+    function startRain(duration = 3000) {
+      canvas.style.display = 'block';
+      createRaindrops(150);
+      drawRain();
+      setTimeout(() => {
+        canvas.style.display = 'none';
+      }, duration);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      startRain();
+    });
+  </script>
+  <footer style="
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--light-bg);
+  color: var(--light-text);
+  text-align: center;
+  padding: 10px 0;
+  transition: background 0.4s ease, color 0.4s ease;
+">
+  <p>&copy; 2025 My Nepali GPA Calculator. All rights reserved.</p>
+  <p>Developed by Rhythm Timalsina</p>
+</footer>
+</body>
+</html>
